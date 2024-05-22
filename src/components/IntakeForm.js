@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const IntakeForm = () => {
   const [formData, setFormData] = useState({
@@ -17,10 +18,14 @@ const IntakeForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_PROPERTY_MANAGEMENT_BACKEND_URL}/api/forms/submit`, formData);
+      console.log(response.data);
+    } catch (error) {
+      console.error('There was an error submitting the form!', error);
+    }
   };
 
   return (
